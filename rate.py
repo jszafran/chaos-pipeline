@@ -1,4 +1,5 @@
 import random
+import json
 
 from faker import Faker
 from pytz import utc
@@ -23,6 +24,14 @@ class Rate:
             source=self.source,
             source_timestamp=self.source_timestamp
         )
+
+    def serialize(self):
+        return json.dumps({
+            "index": self.index,
+            "value": self.value,
+            "source": self.source,
+            "source_timestamp": self.source_timestamp
+        }, default=str)
 
     @classmethod
     def generate_random_rate(cls):
