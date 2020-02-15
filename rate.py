@@ -1,5 +1,6 @@
 import random
 import json
+from datetime import datetime
 
 from faker import Faker
 from pytz import utc
@@ -32,6 +33,13 @@ class Rate:
             "source": self.source,
             "source_timestamp": self.source_timestamp
         }, default=str)
+
+    @classmethod
+    def deserialize(cls, o):
+        data = json.loads(o)
+        # string to datetime conversion
+        data["source_timestamp"] = datetime.fromisoformat(data["source_timestamp"])
+        return cls(**data)
 
     @classmethod
     def generate_random_rate(cls):
